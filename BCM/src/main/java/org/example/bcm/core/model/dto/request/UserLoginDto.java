@@ -3,7 +3,14 @@ package org.example.bcm.core.model.dto.request;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class UserLoginDto {
     @NotBlank(message = "Email is required")
     @NotNull(message = "Email is required")
