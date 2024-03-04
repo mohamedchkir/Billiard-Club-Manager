@@ -1,7 +1,7 @@
 package org.example.bcm.core.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.bcm.core.model.dto.request.UserLoginDto;
+import org.example.bcm.core.model.dto.request.UserLoginDTO;
 import org.example.bcm.core.model.dto.request.UserRegisterDTO;
 import org.example.bcm.core.model.dto.response.AuthenticationDto;
 import org.example.bcm.core.model.entity.Role;
@@ -32,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         registerDto.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
         User user = modelMapper.map(registerDto, User.class);
-        user.setRole(Role.builder().id(3L).build());
+        user.setRole(Role.builder().id(2L).build());
 
         User saved = userRepository.save(user);
 
@@ -49,9 +49,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 
     @Override
-    public AuthenticationDto login(UserLoginDto loginDto) {
+    public AuthenticationDto login(UserLoginDTO loginDto) {
         User userFromDb = userRepository
-                .findByUsername(loginDto.getEmail())
+                .findByEmail(loginDto.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));

@@ -19,8 +19,7 @@ public class UserRegisterDTO {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
-    @Pattern(regexp = "^[0-9]*$", message = "Invalid telephone number")
-    private long telephone;
+    private Long telephone;
 
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
