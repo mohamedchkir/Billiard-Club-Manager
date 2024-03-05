@@ -83,7 +83,6 @@ public class AppSeeder implements CommandLineRunner {
     }
 
     private void saveUser(){
-        //todo client do not inserted in the DB
         User client = User.builder()
                 .id(1L)
                 .email("client@gmail.com")
@@ -95,7 +94,7 @@ public class AppSeeder implements CommandLineRunner {
                 .telephone(130772107)
                 .build();
         User manager = User.builder()
-                .id(1L)
+                .id(2L)
                 .email("manager@gmail.com")
                 .firstName("manager")
                 .lastName("manager")

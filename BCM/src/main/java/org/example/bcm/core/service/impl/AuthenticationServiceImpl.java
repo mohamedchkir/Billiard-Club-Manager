@@ -32,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         registerDto.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
         User user = modelMapper.map(registerDto, User.class);
-        user.setRole(Role.builder().id(2L).build());
+        user.setRole(Role.builder().id(1L).build());
 
         User saved = userRepository.save(user);
 
