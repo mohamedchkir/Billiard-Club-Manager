@@ -30,5 +30,5 @@ public class Challenge {
     @JoinColumn(name = "table_id")
     private Table table;
 
-    private Long numberOfParties;
+    private Integer numberOfParties;
 }

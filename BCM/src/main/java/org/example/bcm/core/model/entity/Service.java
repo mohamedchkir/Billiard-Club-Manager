@@ -3,10 +3,10 @@ package org.example.bcm.core.model.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import lombok.*;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -20,7 +20,8 @@ public class Service {
     private String name;
     @Column(name = "image_url")
     private String imageUrl;
-    @OneToMany(mappedBy = "service")
-    private List<Club> clubs;
+
+    @ManyToMany(mappedBy = "services")
+    private Set<Club> clubs;
 
 }

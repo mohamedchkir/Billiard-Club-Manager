@@ -2,6 +2,9 @@ package org.example.bcm.core.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.bcm.shared.Enum.TableType;
+
+import java.util.Set;
 
 @Entity
 @Getter
@@ -14,12 +17,17 @@ public class Table {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "table_type_id")
+    @Enumerated(EnumType.STRING)
     private TableType tableType;
+
+    @Column(name = "tokens_needed")
+    private Integer tokensNeeded;
 
     @ManyToOne
     @JoinColumn(name = "club_id")
     private Club club;
 
+    //todo check this relation
+    @OneToMany(mappedBy = "table")
+    private Set<Challenge> challenges;
 }

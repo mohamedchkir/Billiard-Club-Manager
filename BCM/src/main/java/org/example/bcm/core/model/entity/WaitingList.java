@@ -3,7 +3,7 @@ package org.example.bcm.core.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -15,8 +15,7 @@ public class WaitingList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private LocalDate reservationDate;
+    private LocalDateTime reservationDate;
     private String guestName;
 
     @ManyToOne(optional = true)

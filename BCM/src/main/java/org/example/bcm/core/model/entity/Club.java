@@ -3,7 +3,8 @@ package org.example.bcm.core.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -19,17 +20,22 @@ public class Club {
     private String name;
     private String description;
     private String address;
-    private String fbLink;
-
-    private LocalDate openingHour;
-    private LocalDate closeHour;
+    private LocalTime openingHour;
+    private LocalTime closeHour;
     private int numberOfToken;
 
     @ManyToOne
     @JoinColumn(name = "City_id")
     private City city;
 
-    @ManyToOne
-    @JoinColumn(name = "service_id")
-    private Service service;
+    @ManyToMany
+    @JoinTable(
+            name = "club_service",
+            joinColumns = @JoinColumn(name = "club_id"),
+            inverseJoinColumns = @JoinColumn(name = "service_id"))
+    private Set<Service> services;
+
+    @OneToMany(mappedBy = "club")
+    private Set<Table> tables;
+
 }
