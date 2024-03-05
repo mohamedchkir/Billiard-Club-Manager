@@ -11,8 +11,8 @@ import java.util.List;
 public class UserDTO implements Serializable {
     private String firstName;
     private String lastName;
-    private int numberOfToken;
-    private long telephone;
+    private Integer numberOfToken;
+    private String telephone;
     private String email;
     private String password;
     private String role;

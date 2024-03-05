@@ -19,7 +19,7 @@ public class UserRegisterDTO {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
-    private Long telephone;
+    private String telephone;
 
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
