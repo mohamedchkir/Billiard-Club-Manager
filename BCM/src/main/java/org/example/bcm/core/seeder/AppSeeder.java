@@ -91,7 +91,7 @@ public class AppSeeder implements CommandLineRunner {
                 .password(passwordEncoder.encode("password"))
                 .numberOfToken(0)
                 .role(roles.get("CLIENT"))
-                .telephone(130772107)
+                .telephone("130772107")
                 .build();
         User manager = User.builder()
                 .id(2L)
@@ -101,7 +101,7 @@ public class AppSeeder implements CommandLineRunner {
                 .password(passwordEncoder.encode("password"))
                 .numberOfToken(0)
                 .role(roles.get("MANAGER"))
-                .telephone(130772107)
+                .telephone("130772107")
                 .build();
 
         userRepository.saveAll(List.of(client,manager));
