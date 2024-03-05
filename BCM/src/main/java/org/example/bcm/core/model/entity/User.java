@@ -23,10 +23,10 @@ public class User implements UserDetails {
     private Long id;
     private String firstName;
     private String lastName;
-    private long telephone;
+    private String telephone;
     private String email;
     private String password;
-    private int numberOfToken;
+    private Integer numberOfToken;
 
     @ManyToOne
     private Role role;
