@@ -1,9 +1,9 @@
 package org.example.bcm.core.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.bcm.core.model.dto.request.UserLoginDTO;
-import org.example.bcm.core.model.dto.request.UserRegisterDTO;
-import org.example.bcm.core.model.dto.response.AuthenticationDto;
+import org.example.bcm.core.model.dto.request.UserLoginRequestDto;
+import org.example.bcm.core.model.dto.request.UserRegisterRequestDto;
+import org.example.bcm.core.model.dto.response.AuthenticationResponseDto;
 import org.example.bcm.core.model.entity.Role;
 import org.example.bcm.core.model.entity.Token;
 import org.example.bcm.core.model.entity.User;
@@ -28,7 +28,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 
     @Override
-    public AuthenticationDto register(UserRegisterDTO registerDto) {
+    public AuthenticationResponseDto register(UserRegisterRequestDto registerDto) {
         registerDto.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
         User user = modelMapper.map(registerDto, User.class);
@@ -40,7 +40,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         String token = tokenService.generateToken(saved, refreshToken);
 
-        return AuthenticationDto.builder()
+        return AuthenticationResponseDto.builder()
                 .accessToken(token)
                 .refreshToken(refreshToken.getToken())
                 .tokenExpiration(tokenService.extractExpiration(token))
@@ -49,7 +49,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 
     @Override
-    public AuthenticationDto login(UserLoginDTO loginDto) {
+    public AuthenticationResponseDto login(UserLoginRequestDto loginDto) {
         User userFromDb = userRepository
                 .findByEmail(loginDto.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -60,7 +60,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         String token = tokenService.generateToken(userFromDb, refreshToken);
 
-        return AuthenticationDto.builder()
+        return AuthenticationResponseDto.builder()
                 .accessToken(token)
                 .refreshToken(refreshToken.getToken())
                 .tokenExpiration(tokenService.extractExpiration(token))

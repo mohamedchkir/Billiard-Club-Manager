@@ -3,6 +3,6 @@ package org.example.bcm.core.model.dto.request;
 import lombok.Data;
 
 @Data
-public class RefreshTokenRequest {
+public class RefreshTokenRequestDto {
     private String refreshToken;
 }

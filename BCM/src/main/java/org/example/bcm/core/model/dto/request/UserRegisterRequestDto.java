@@ -2,7 +2,6 @@ package org.example.bcm.core.model.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -12,7 +11,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRegisterDTO {
+public class UserRegisterRequestDto {
     @NotBlank(message = "First name is required")
     private String firstName;
 

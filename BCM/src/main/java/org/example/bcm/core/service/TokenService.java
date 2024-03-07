@@ -1,6 +1,6 @@
 package org.example.bcm.core.service;
 
-import org.example.bcm.core.model.dto.response.AuthenticationDto;
+import org.example.bcm.core.model.dto.response.AuthenticationResponseDto;
 import org.example.bcm.core.model.entity.Token;
 import org.example.bcm.core.model.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,5 +22,5 @@ public interface TokenService {
 
     void revokeRefreshTokensByUser(User user);
 
-    AuthenticationDto generateNewAccessToken(String refreshToken);
+    AuthenticationResponseDto generateNewAccessToken(String refreshToken);
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class UserDTO implements Serializable {
+public class UserResponseDto implements Serializable {
     private String firstName;
     private String lastName;
     private Integer numberOfToken;

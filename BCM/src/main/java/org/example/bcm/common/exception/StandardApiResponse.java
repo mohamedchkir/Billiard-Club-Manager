@@ -1,4 +1,4 @@
-package org.example.bcm.core.model.dto.response;
+package org.example.bcm.common.exception;
 
 import lombok.Builder;
 import lombok.Getter;

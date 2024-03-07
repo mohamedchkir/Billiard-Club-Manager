@@ -22,7 +22,7 @@ public class Club {
     private String address;
     private LocalTime openingHour;
     private LocalTime closeHour;
-    private int numberOfToken;
+    private Integer numberOfToken;
 
     @ManyToOne
     @JoinColumn(name = "City_id")

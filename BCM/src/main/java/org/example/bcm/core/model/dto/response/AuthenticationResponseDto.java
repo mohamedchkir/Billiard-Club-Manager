@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Data
 @Builder
-public class AuthenticationDto implements Serializable {
+public class AuthenticationResponseDto implements Serializable {
     @JsonProperty("access-token")
     private String accessToken;
     @JsonProperty("refresh-token")

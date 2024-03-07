@@ -7,7 +7,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.example.bcm.common.exception.DataBaseConstraintException;
-import org.example.bcm.core.model.dto.response.AuthenticationDto;
+import org.example.bcm.core.model.dto.response.AuthenticationResponseDto;
 import org.example.bcm.core.model.entity.Token;
 import org.example.bcm.core.model.entity.User;
 import org.example.bcm.core.repository.TokenRepository;
@@ -122,7 +122,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public AuthenticationDto generateNewAccessToken(String refreshToken) {
+    public AuthenticationResponseDto generateNewAccessToken(String refreshToken) {
         Token token = tokenRepository.findByToken(refreshToken)
                 .orElseThrow(() -> new DataBaseConstraintException("Invalid refresh token"));
 
@@ -137,7 +137,7 @@ public class TokenServiceImpl implements TokenService {
         User user = token.getUser();
         String accessToken = generateToken(user, token);
 
-        return AuthenticationDto.builder()
+        return AuthenticationResponseDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .tokenExpiration(extractExpiration(accessToken))
