@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.example.bcm.core.model.dto.request.ClubRequestDto;
+import org.example.bcm.core.model.dto.request.update.UpdateClubRequestDto;
+import org.example.bcm.core.model.dto.request.update.UpdateServiceRequestDto;
 import org.example.bcm.core.model.dto.response.ClubResponseDto;
 import org.example.bcm.core.service.ClubService;
 import org.springframework.http.HttpStatus;
@@ -39,9 +41,9 @@ public class ClubController {
         return ResponseEntity.ok(clubs);
     }
 
-    @PutMapping("/{clubId}")
-    public ResponseEntity<ClubResponseDto> updateClub(@PathVariable Long clubId, @Valid @RequestBody ClubRequestDto clubRequestDto) {
-        ClubResponseDto updatedClub = clubService.updateClub(clubId, clubRequestDto);
+    @PutMapping()
+    public ResponseEntity<ClubResponseDto> updateClub(@Valid @RequestBody UpdateClubRequestDto updateClubRequestDto) {
+        ClubResponseDto updatedClub = clubService.updateClub(updateClubRequestDto);
         return ResponseEntity.ok(updatedClub);
     }
 

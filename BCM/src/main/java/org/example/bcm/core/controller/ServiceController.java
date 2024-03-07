@@ -3,6 +3,7 @@ package org.example.bcm.core.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.bcm.core.model.dto.request.ServiceRequestDto;
+import org.example.bcm.core.model.dto.request.update.UpdateServiceRequestDto;
 import org.example.bcm.core.model.dto.response.ServiceResponseDto;
 import org.example.bcm.core.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,9 @@ public class ServiceController {
         return ResponseEntity.ok(services);
     }
 
-    @PutMapping("/{serviceId}")
-    public ResponseEntity<ServiceResponseDto> updateService(@PathVariable Long serviceId, @Valid @RequestBody ServiceRequestDto serviceRequestDto) {
-        ServiceResponseDto updatedService = serviceService.updateService(serviceId, serviceRequestDto);
+    @PutMapping
+    public ResponseEntity<ServiceResponseDto> updateService(@Valid @RequestBody UpdateServiceRequestDto updateServiceRequestDto) {
+        ServiceResponseDto updatedService = serviceService.updateService(updateServiceRequestDto);
         return ResponseEntity.ok(updatedService);
     }
 
