@@ -1,12 +1,9 @@
 package org.example.bcm.core.model.dto.request.update;
 
-import jakarta.validation.constraints.Negative;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.format.annotation.NumberFormat;
 
 @Data
 @Builder

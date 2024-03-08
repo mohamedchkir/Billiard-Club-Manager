@@ -8,11 +8,8 @@ import lombok.*;
 import java.time.LocalTime;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class ClubRequestDto {
     @NotBlank(message = "Name is required")
     private String name;

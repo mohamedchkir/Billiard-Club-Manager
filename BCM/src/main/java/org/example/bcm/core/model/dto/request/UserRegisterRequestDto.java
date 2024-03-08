@@ -31,5 +31,4 @@ public class UserRegisterRequestDto {
     //todo: add more fields for example city ,etc.
 
 
-
 }
