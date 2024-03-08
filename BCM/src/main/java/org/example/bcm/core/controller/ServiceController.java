@@ -1,12 +1,14 @@
 package org.example.bcm.core.controller;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.example.bcm.core.model.dto.request.ServiceRequestDto;
 import org.example.bcm.core.model.dto.request.update.UpdateServiceRequestDto;
 import org.example.bcm.core.model.dto.response.ServiceResponseDto;
 import org.example.bcm.core.service.ServiceService;
 import org.example.bcm.shared.Const.AppEndpoint;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(AppEndpoint.SERVICE_ENDPOINT)
-@RequiredArgsConstructor
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ServiceController {
 
 
