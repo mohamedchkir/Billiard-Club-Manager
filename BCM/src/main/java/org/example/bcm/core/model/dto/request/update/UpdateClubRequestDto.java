@@ -11,9 +11,7 @@ import java.util.Set;
 @Builder
 public class UpdateClubRequestDto {
     @NotNull(message = "Id is required for update")
-    @NotBlank(message = "Id is required for update")
     @Negative(message = "Id must be a positive number")
-    @NotEmpty(message = "Id is required for update")
     private Long id;
     @NotBlank(message = "Name is required")
     private String name;
