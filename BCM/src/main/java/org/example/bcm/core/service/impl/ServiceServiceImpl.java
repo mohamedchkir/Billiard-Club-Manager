@@ -1,21 +1,19 @@
 package org.example.bcm.core.service.impl;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.example.bcm.common.exception.ServiceNotFoundException;
 import org.example.bcm.core.model.dto.request.ServiceRequestDto;
 import org.example.bcm.core.model.dto.request.update.UpdateServiceRequestDto;
 import org.example.bcm.core.model.dto.response.ServiceResponseDto;
-import org.example.bcm.core.model.entity.Service;
 import org.example.bcm.core.repository.ServiceRepository;
 import org.example.bcm.core.service.ServiceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.example.bcm.core.model.entity.Service;
 import java.util.List;
 import java.util.stream.Collectors;
-@RequiredArgsConstructor
-@AllArgsConstructor
+
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ServiceServiceImpl implements ServiceService {
 
 

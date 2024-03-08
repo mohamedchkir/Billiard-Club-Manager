@@ -1,10 +1,14 @@
 package org.example.bcm.core.model.dto.request.update;
 
 import jakarta.validation.constraints.*;
+import lombok.Builder;
+import lombok.Data;
 
 import java.time.LocalTime;
 import java.util.Set;
 
+@Data
+@Builder
 public class UpdateClubRequestDto {
     @NotNull(message = "Id is required for update")
     @NotBlank(message = "Id is required for update")
