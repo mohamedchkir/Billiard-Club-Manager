@@ -4,8 +4,12 @@ import jakarta.validation.constraints.Negative;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.format.annotation.NumberFormat;
 
+@Data
+@Builder
 public class UpdateServiceRequestDto {
     @NotNull(message = "Id is required for update")
     @NotBlank(message = "Id is required for update")
