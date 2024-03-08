@@ -1,22 +1,20 @@
 package org.example.bcm.core.controller;
 
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.example.bcm.core.model.dto.request.ClubRequestDto;
 import org.example.bcm.core.model.dto.request.update.UpdateClubRequestDto;
-import org.example.bcm.core.model.dto.request.update.UpdateServiceRequestDto;
 import org.example.bcm.core.model.dto.response.ClubResponseDto;
 import org.example.bcm.core.service.ClubService;
+import org.example.bcm.shared.Const.AppEndpoint;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/clubs")
+@RequestMapping(AppEndpoint.CLUB_ENDPOINT)
 @RequiredArgsConstructor
 public class ClubController {
 
