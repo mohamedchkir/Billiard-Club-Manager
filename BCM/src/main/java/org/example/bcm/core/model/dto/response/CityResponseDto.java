@@ -1,10 +1,10 @@
 package org.example.bcm.core.model.dto.response;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@Builder
+@Getter
+@Setter
 public class CityResponseDto {
     private Long id;
     private String name;

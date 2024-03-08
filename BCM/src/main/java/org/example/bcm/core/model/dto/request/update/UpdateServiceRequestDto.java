@@ -12,7 +12,6 @@ import org.springframework.format.annotation.NumberFormat;
 @Builder
 public class UpdateServiceRequestDto {
     @NotNull(message = "Id is required for update")
-    @Negative(message = "Id must be a positive number")
     private Long id;
     @NotNull(message = "Name is required")
     @NotBlank(message = "Name is required")

@@ -41,6 +41,9 @@ public class ServiceServiceImpl implements ServiceService {
     @Override
     public List<ServiceResponseDto> getAllServices() {
         List<Service> services = serviceRepository.findAll();
+        if (services.isEmpty()) {
+            throw new ServiceNotFoundException("No services found");
+        }
         return services.stream()
                 .map(service -> modelMapper.map(service, ServiceResponseDto.class))
                 .collect(Collectors.toList());
