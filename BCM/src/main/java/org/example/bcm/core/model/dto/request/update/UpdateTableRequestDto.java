@@ -11,8 +11,6 @@ import org.example.bcm.shared.Enum.TableType;
 @Builder
 public class UpdateTableRequestDto {
     @NotNull(message = "Id is required for update")
-    @NotBlank(message = "Id is required for update")
-    @NotEmpty(message = "Id is required for update")
     private Long id;
 
     @NotNull(message = "Table type is required")

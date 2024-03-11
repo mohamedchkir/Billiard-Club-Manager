@@ -1,14 +1,16 @@
 package org.example.bcm.core.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.example.bcm.common.exception.ServiceNotFoundException;
 import org.example.bcm.core.model.dto.request.ServiceRequestDto;
 import org.example.bcm.core.model.dto.request.update.UpdateServiceRequestDto;
 import org.example.bcm.core.model.dto.response.ServiceResponseDto;
+import org.example.bcm.core.model.entity.Club;
 import org.example.bcm.core.model.entity.Service;
+import org.example.bcm.core.model.mapper.ServiceMapper; // Import your custom mapper
 import org.example.bcm.core.repository.ServiceRepository;
 import org.example.bcm.core.service.ServiceService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -18,24 +20,20 @@ import java.util.stream.Collectors;
 @org.springframework.stereotype.Service
 public class ServiceServiceImpl implements ServiceService {
 
-
-    private ServiceRepository serviceRepository;
-
-
-    private ModelMapper modelMapper;
+    private final ServiceRepository serviceRepository;
 
     @Override
     public ServiceResponseDto createService(ServiceRequestDto serviceRequestDto) {
-        Service service = modelMapper.map(serviceRequestDto, Service.class);
+        Service service = ServiceMapper.toEntity(serviceRequestDto);
         Service savedService = serviceRepository.save(service);
-        return modelMapper.map(savedService, ServiceResponseDto.class);
+        return ServiceMapper.toDto(savedService);
     }
 
     @Override
     public ServiceResponseDto getServiceById(Long serviceId) {
         Service service = serviceRepository.findById(serviceId)
                 .orElseThrow(() -> new ServiceNotFoundException("Service not found with ID: " + serviceId));
-        return modelMapper.map(service, ServiceResponseDto.class);
+        return ServiceMapper.toDto(service);
     }
 
     @Override
@@ -45,7 +43,7 @@ public class ServiceServiceImpl implements ServiceService {
             throw new ServiceNotFoundException("No services found");
         }
         return services.stream()
-                .map(service -> modelMapper.map(service, ServiceResponseDto.class))
+                .map(ServiceMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -54,16 +52,25 @@ public class ServiceServiceImpl implements ServiceService {
         Service existingService = serviceRepository.findById(updateServiceRequestDto.getId())
                 .orElseThrow(() -> new ServiceNotFoundException("Service not found with ID: " + updateServiceRequestDto.getId()));
 
-        modelMapper.map(updateServiceRequestDto, existingService);
+        ServiceMapper.updateEntity(existingService, updateServiceRequestDto);
         Service updatedService = serviceRepository.save(existingService);
-        return modelMapper.map(updatedService, ServiceResponseDto.class);
+        return ServiceMapper.toDto(updatedService);
     }
 
-    @Override
+    @Transactional
     public void deleteService(Long serviceId) {
-        if (!serviceRepository.existsById(serviceId)) {
-            throw new ServiceNotFoundException("Service not found with ID: " + serviceId);
+        Service service = serviceRepository.findById(serviceId)
+                .orElseThrow(() -> new ServiceNotFoundException("Service not found with ID: " + serviceId));
+
+        // Remove the service from associated clubs
+        for (Club club : service.getClubs()) {
+            club.getServices().remove(service);
         }
-        serviceRepository.deleteById(serviceId);
+
+        // Clear the association from the service side
+        service.getClubs().clear();
+
+        // Delete the service
+        serviceRepository.delete(service);
     }
 }

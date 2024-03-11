@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -28,14 +29,14 @@ public class Club {
     @JoinColumn(name = "City_id")
     private City city;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "club_service",
             joinColumns = @JoinColumn(name = "club_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id"))
-    private Set<Service> services;
+    private Set<Service> services = new HashSet<>();
 
-    @OneToMany(mappedBy = "club")
-    private Set<Table> tables;
-
+    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Table> tables = new HashSet<>();
 }
+

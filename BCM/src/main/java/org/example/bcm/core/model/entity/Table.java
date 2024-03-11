@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.example.bcm.shared.Enum.TableType;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
