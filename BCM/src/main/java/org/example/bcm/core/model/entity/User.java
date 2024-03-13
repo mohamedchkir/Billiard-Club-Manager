@@ -23,13 +23,19 @@ public class User implements UserDetails {
     private Long id;
     private String firstName;
     private String lastName;
-    private long telephone;
+    private String telephone;
     private String email;
     private String password;
-    private int numberOfToken;
+    private Integer numberOfToken;
 
     @ManyToOne
     private Role role;
+
+    @ManyToOne
+    @JoinColumn(name = "City_id")
+    private City city;
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
