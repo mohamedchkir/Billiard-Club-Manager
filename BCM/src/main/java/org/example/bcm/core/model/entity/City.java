@@ -19,4 +19,7 @@ public class City {
     @OneToMany(mappedBy = "city",cascade = CascadeType.ALL)
     private List<Club> clubs;
 
+    @OneToMany(mappedBy = "city",cascade = CascadeType.ALL)
+    private List<User> users;
+
 }

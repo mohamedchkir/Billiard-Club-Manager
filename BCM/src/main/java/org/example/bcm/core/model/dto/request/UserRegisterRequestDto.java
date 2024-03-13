@@ -28,7 +28,5 @@ public class UserRegisterRequestDto {
     @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
 
-    //todo: add more fields for example city ,etc.
-
 
 }

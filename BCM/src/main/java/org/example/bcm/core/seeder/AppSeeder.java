@@ -110,6 +110,7 @@ public class AppSeeder implements CommandLineRunner {
                     .numberOfToken(0)
                     .role(roles.get("CLIENT"))
                     .telephone("130772107")
+                    .city(cityRepository.findById(1L).orElseThrow(() -> new NoSuchElementException("City not found with ID: 1")))
                     .build();
             User manager = User.builder()
                     .id(2L)
@@ -120,6 +121,7 @@ public class AppSeeder implements CommandLineRunner {
                     .numberOfToken(0)
                     .role(roles.get("MANAGER"))
                     .telephone("130772107")
+                    .city(cityRepository.findById(1L).orElseThrow(() -> new NoSuchElementException("City not found with ID: 1")))
                     .build();
 
             userRepository.saveAll(List.of(client, manager));

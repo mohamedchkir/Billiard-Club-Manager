@@ -31,6 +31,12 @@ public class User implements UserDetails {
     @ManyToOne
     private Role role;
 
+    @ManyToOne
+    @JoinColumn(name = "City_id")
+    private City city;
+
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();

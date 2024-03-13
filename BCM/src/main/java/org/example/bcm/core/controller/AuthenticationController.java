@@ -22,7 +22,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(AppEndpoint.AUTHENTICATION_ENDPOINT)
-public class AuthenticationController{
+public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final TokenService tokenService;
 

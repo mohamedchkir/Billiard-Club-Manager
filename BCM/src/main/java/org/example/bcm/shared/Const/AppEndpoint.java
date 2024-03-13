@@ -11,4 +11,5 @@ public class AppEndpoint {
     public static final String CLUB_ENDPOINT = VERSION + "/club";
     public static final String SERVICE_ENDPOINT = VERSION + "/service";
     public static final String TABLE_ENDPOINT = VERSION + "/table";
+    public static final String USER_ENDPOINT = VERSION + "/user";
 }

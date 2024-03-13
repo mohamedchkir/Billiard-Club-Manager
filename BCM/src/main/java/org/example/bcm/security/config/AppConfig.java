@@ -1,7 +1,7 @@
 package org.example.bcm.security.config;
 
 import lombok.RequiredArgsConstructor;
-import org.example.bcm.core.service.impl.UserService;
+import org.example.bcm.core.service.impl.UserServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig {
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     @Bean
     public ModelMapper modelMapper() {
