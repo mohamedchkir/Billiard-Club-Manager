@@ -50,4 +50,10 @@ public class ClubController {
         clubService.deleteClub(clubId);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ClubResponseDto>> searchClubs(@RequestParam(required = false) String name , @RequestParam(required = false) Long cityId) {
+        List<ClubResponseDto> clubs = clubService.filterClubs(name, cityId);
+        return ResponseEntity.ok(clubs);
+    }
 }

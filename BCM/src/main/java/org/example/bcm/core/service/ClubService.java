@@ -18,4 +18,6 @@ public interface ClubService {
     ClubResponseDto updateClub(UpdateClubRequestDto updateClubRequestDto);
 
     void deleteClub(Long clubId);
+
+    List<ClubResponseDto> filterClubs(String name, Long cityId);
 }
