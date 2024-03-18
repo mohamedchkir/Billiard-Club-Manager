@@ -52,8 +52,8 @@ public class ClubController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<ClubResponseDto>> searchClubs(@RequestParam(required = false) String name , @RequestParam(required = false) Long cityId) {
-        List<ClubResponseDto> clubs = clubService.filterClubs(name, cityId);
+    public ResponseEntity<List<ClubResponseDto>> searchClubs(@RequestParam(required = false) String firstName ,@RequestParam(required = false) Long cityId) {
+        List<ClubResponseDto> clubs = clubService.filterClubs(firstName, cityId);
         return ResponseEntity.ok(clubs);
     }
 }

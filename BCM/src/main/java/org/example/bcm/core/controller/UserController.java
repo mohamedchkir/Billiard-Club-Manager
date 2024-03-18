@@ -43,9 +43,15 @@ public class UserController {
 
     @PatchMapping("/update")
     public ResponseEntity<UserSimpleResponseDto> updateUser(@Valid
-            @RequestBody UpdateUserRequestDto updateUserRequestDto
+                                                            @RequestBody UpdateUserRequestDto updateUserRequestDto
     ) {
         UserSimpleResponseDto updatedUser = userService.updateUser(updateUserRequestDto);
         return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<UserSimpleResponseDto>> searchClubs(@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName, @RequestParam(required = false) Long cityId) {
+        List<UserSimpleResponseDto> users = userService.filterUsers(firstName, lastName, cityId);
+        return ResponseEntity.ok(users);
     }
 }
