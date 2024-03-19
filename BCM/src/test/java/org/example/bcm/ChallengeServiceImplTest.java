@@ -86,4 +86,20 @@ public class ChallengeServiceImplTest {
         // Invoke the method
         assertThrows(ResourceNotFoundException.class, () -> challengeService.createChallenge(requestDto));
     }
+
+    @Test
+    void createChallenge_TableNotFound_Failure() {
+        // Prepare test data
+        ChallengeRequestDto requestDto = ChallengeRequestDto.builder()
+                .challengerId(1L)
+                .tableId(1L)
+                .numberOfParties(2)
+                .build();
+
+        User challenger = new User();
+        challenger.setId(1L);
+
+        // Invoke the method
+        assertThrows(ResourceNotFoundException.class, () -> challengeService.createChallenge(requestDto));
+    }
 }
