@@ -69,6 +69,21 @@ public class ChallengeServiceImpl implements ChallengeService {
             throw new NotAllowedToJoinException("This challenge is already full");
         }
 
+        User adversary = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+
+        if (challenge.getChallenger().getId().equals(adversary.getId())) {
+            throw new NotAllowedToJoinException("You can't join your own challenge");
+        }
+
+       if ((challenge.getTable().getTokensNeeded() * challenge.getNumberOfParties()) > adversary.getNumberOfToken()){
+            throw new TokenNotEnoughException("To join this challenge, you need " + challenge.getTable().getTokensNeeded() * challenge.getNumberOfParties() + " tokens");
+        }
+
+        // Decrease the number of tokens of the challenge adversary
+        adversary.setNumberOfToken(adversary.getNumberOfToken() - (challenge.getTable().getTokensNeeded() * challenge.getNumberOfParties()));
+        userRepository.save(adversary);
+
         challenge.setAdversary(userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId)));
 
