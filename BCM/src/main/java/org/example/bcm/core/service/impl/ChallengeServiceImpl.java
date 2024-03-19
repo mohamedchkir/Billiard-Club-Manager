@@ -35,18 +35,26 @@ public class ChallengeServiceImpl implements ChallengeService {
         User creator = userRepository.findById(challengeRequestDto.getChallengerId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", challengeRequestDto.getChallengerId()));
 
-        if (table.getTokensNeeded() < (creator.getNumberOfToken() * challenge.getNumberOfParties())) {
-            throw new TokenNotEnoughException("To create a challenge, you need " + creator.getNumberOfToken() * challenge.getNumberOfParties() + " tokens");
-        }
-
+        // Check if the table has already a challenge
         if (table.getChallenges().stream().anyMatch(c -> c.getAdversary() == null)) {
-            throw new IllegalStateException("Table is already full");
+            throw new NotAllowedToJoinException("This table has already a challenge");
         }
 
+        // Check if the creator has enough tokens
+        if ((table.getTokensNeeded() * challenge.getNumberOfParties()) > creator.getNumberOfToken()){
+            throw new TokenNotEnoughException("To create a challenge, you need " + table.getTokensNeeded() * challenge.getNumberOfParties() + " tokens");
+        }
+
+        // Decrease the number of tokens of the challenge creator
+        creator.setNumberOfToken(creator.getNumberOfToken() - (table.getTokensNeeded() * challenge.getNumberOfParties()));
+        userRepository.save(creator);
+
+        // Set the table and the challenger of the challenge and save it
         challenge.setTable(table);
         challenge.setChallenger(creator);
         challenge.setNumberOfParties(challengeRequestDto.getNumberOfParties());
         Challenge createdChallenge = challengeRepository.save(challenge);
+
         return ChallengeMapper.toDto(createdChallenge);
 
     }
