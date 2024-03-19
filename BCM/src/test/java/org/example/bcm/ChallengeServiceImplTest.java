@@ -1,6 +1,7 @@
 package org.example.bcm;
 
 import org.example.bcm.common.exception.ResourceNotFoundException;
+import org.example.bcm.common.exception.TokenNotEnoughException;
 import org.example.bcm.core.model.dto.request.ChallengeRequestDto;
 import org.example.bcm.core.model.dto.response.ChallengeResponseDto;
 import org.example.bcm.core.model.entity.Challenge;
@@ -101,5 +102,29 @@ public class ChallengeServiceImplTest {
 
         // Invoke the method
         assertThrows(ResourceNotFoundException.class, () -> challengeService.createChallenge(requestDto));
+    }
+    @Test
+    void createChallenge_ChallengerNotEnoughTokens_Failure() {
+        // Prepare test data
+        ChallengeRequestDto requestDto = ChallengeRequestDto.builder()
+                .challengerId(1L)
+                .tableId(1L)
+                .numberOfParties(2)
+                .build();
+
+        User challenger = new User();
+        challenger.setId(1L);
+        challenger.setNumberOfToken(3); // Set fewer tokens than required
+
+        Table table = new Table();
+        table.setId(1L);
+        table.setTokensNeeded(5);
+        table.setChallenges(Set.of());
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(challenger));
+        when(tableRepository.findById(1L)).thenReturn(Optional.of(table));
+
+        // Invoke the method
+        assertThrows(TokenNotEnoughException.class, () -> challengeService.createChallenge(requestDto));
     }
 }
