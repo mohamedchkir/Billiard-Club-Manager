@@ -1,5 +1,6 @@
 package org.example.bcm;
 
+import org.example.bcm.common.exception.ResourceNotFoundException;
 import org.example.bcm.core.model.dto.request.ChallengeRequestDto;
 import org.example.bcm.core.model.dto.response.ChallengeResponseDto;
 import org.example.bcm.core.model.entity.Challenge;
@@ -20,6 +21,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -70,5 +72,18 @@ public class ChallengeServiceImplTest {
 
         // Verify the result
         assertNotNull(responseDto);
+    }
+
+    @Test
+    void createChallenge_UserNotFound_Failure() {
+        // Prepare test data
+        ChallengeRequestDto requestDto = ChallengeRequestDto.builder()
+                .challengerId(1L)
+                .tableId(1L)
+                .numberOfParties(2)
+                .build();
+
+        // Invoke the method
+        assertThrows(ResourceNotFoundException.class, () -> challengeService.createChallenge(requestDto));
     }
 }
