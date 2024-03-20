@@ -75,4 +75,16 @@ public class UserServiceImpl implements UserDetailsService,UserService {
         User updatedUser = userRepository.save(existingUser);
         return UserMapper.toDto(updatedUser);
     }
+
+    @Override
+    public List<UserSimpleResponseDto> filterUsers(String firstName, String lastName, Long cityId) {
+        List<User> users = userRepository.filterUsers(firstName, lastName, cityId);
+
+        if (users.isEmpty()) {
+            throw new ServiceNotFoundException("No users found");
+        }
+        return users.stream()
+                .map(UserMapper::toDto)
+                .collect(Collectors.toList());
+    }
 }

@@ -119,4 +119,14 @@ public class ClubServiceImpl implements ClubService {
         // Delete the club
         clubRepository.delete(club);
     }
+
+    public List<ClubResponseDto> filterClubs(String name, Long cityId) {
+        List<Club> clubs = clubRepository.filter(name, cityId);
+        if (clubs.isEmpty()) {
+            throw new ServiceNotFoundException("No clubs found");
+        }
+        return clubs.stream()
+                .map(ClubMapper::toDto)
+                .collect(Collectors.toList());
+    }
 }

@@ -36,4 +36,18 @@ public class ExceptionHandlerAdvice {
                 .status(HttpStatus.NOT_FOUND)
                 .body(StandardApiResponse.error(ex.getMessage()));
     }
+
+    @ExceptionHandler(TokenNotEnoughException.class)
+    public ResponseEntity<StandardApiResponse<?>> handleTokenNotEnoughException(TokenNotEnoughException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(StandardApiResponse.error(ex.getMessage()));
+    }
+
+    @ExceptionHandler(NotAllowedToJoinException.class)
+    public ResponseEntity<StandardApiResponse<?>> handleNotAllowedToJoinException(NotAllowedToJoinException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_ACCEPTABLE)
+                .body(StandardApiResponse.error(ex.getMessage()));
+    }
 }
