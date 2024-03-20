@@ -242,6 +242,35 @@ public class ChallengeServiceImplTest {
                 () -> challengeService.joinChallenge(challengeId, userId));
     }
 
+    @Test
+    void joinChallenge_InsufficientTokensToJoin_Failure() {
+        // Prepare test data
+        long challengeId = 1L;
+        long userId = 2L;
+
+        User challenger = new User();
+        challenger.setId(1L);
+        challenger.setNumberOfToken(30);
+
+        Table table = new Table();
+        table.setTokensNeeded(5);
+
+        User adversary = new User();
+        adversary.setId(userId);
+        adversary.setNumberOfToken(2);
+
+        Challenge challenge = new Challenge();
+        challenge.setId(challengeId);
+        challenge.setChallenger(challenger);
+        challenge.setTable(table);
+        challenge.setNumberOfParties(3);
+
+        when(challengeRepository.findById(challengeId)).thenReturn(Optional.of(challenge));
+        when(userRepository.findById(userId)).thenReturn(Optional.of(adversary));
+
+        assertThrows(TokenNotEnoughException.class,
+                () -> challengeService.joinChallenge(challengeId, userId));
+    }
 
 
 
