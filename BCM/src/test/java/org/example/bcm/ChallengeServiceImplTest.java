@@ -1,5 +1,6 @@
 package org.example.bcm;
 
+import org.example.bcm.common.exception.NotAllowedToJoinException;
 import org.example.bcm.common.exception.ResourceNotFoundException;
 import org.example.bcm.common.exception.TokenNotEnoughException;
 import org.example.bcm.core.model.dto.request.ChallengeRequestDto;
@@ -25,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 public class ChallengeServiceImplTest {
@@ -127,4 +129,49 @@ public class ChallengeServiceImplTest {
         // Invoke the method
         assertThrows(TokenNotEnoughException.class, () -> challengeService.createChallenge(requestDto));
     }
+
+    @Test
+    void joinChallenge_Success() {
+        // Prepare test data
+        long challengeId = 1L;
+        long userId = 1L;
+
+        // Create adversary user
+        User adversary = new User();
+        adversary.setId(userId);
+        adversary.setNumberOfToken(20); // Sufficient tokens
+
+        // Create challenger user
+        User challenger = new User();
+        challenger.setId(2L);
+        challenger.setNumberOfToken(10);
+
+        // Create table
+        Table table = new Table();
+        table.setTokensNeeded(5); // Tokens needed for the challenge
+
+        // Create challenge
+        Challenge challenge = new Challenge();
+        challenge.setId(challengeId);
+        challenge.setChallenger(challenger);
+        challenge.setTable(table);
+        challenge.setNumberOfParties(2);
+
+        table.setChallenges(Set.of(challenge));
+
+        // Stub repository method calls
+        when(challengeRepository.findById(challengeId)).thenReturn(Optional.of(challenge));
+        when(userRepository.findById(userId)).thenReturn(Optional.of(adversary));
+        when(challengeRepository.save(any(Challenge.class))).thenReturn(challenge);
+
+        // Invoke the method
+        ChallengeResponseDto responseDto = challengeService.joinChallenge(challengeId, userId);
+
+        // Verify the result
+        assertNotNull(responseDto);
+    }
+
+
+
+
 }
