@@ -171,6 +171,21 @@ public class ChallengeServiceImplTest {
         assertNotNull(responseDto);
     }
 
+    @Test
+    void joinChallenge_ChallengeNotFound_Failure() {
+        // Prepare test data
+        long challengeId = 1L;
+        long userId = 2L;
+
+        // Stub repository method calls
+        when(challengeRepository.findById(challengeId)).thenReturn(Optional.empty());
+
+        // Verify that the method throws ResourceNotFoundException
+        assertThrows(ResourceNotFoundException.class,
+                () -> challengeService.joinChallenge(challengeId, userId));
+    }
+
+
 
 
 
