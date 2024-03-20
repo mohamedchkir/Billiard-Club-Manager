@@ -203,6 +203,24 @@ public class ChallengeServiceImplTest {
                 () -> challengeService.joinChallenge(challengeId, userId));
     }
 
+    @Test
+    void joinChallenge_ChallengeAlreadyFull_Failure() {
+        // Prepare test data
+        long challengeId = 1L;
+        long userId = 2L;
+
+        Challenge challenge = new Challenge();
+        challenge.setId(challengeId);
+        challenge.setAdversary(new User()); // Challenge already has an adversary
+
+        // Stub repository method calls
+        when(challengeRepository.findById(challengeId)).thenReturn(Optional.of(challenge));
+
+        // Verify that the method throws NotAllowedToJoinException
+        assertThrows(NotAllowedToJoinException.class,
+                () -> challengeService.joinChallenge(challengeId, userId));
+    }
+
 
 
 
