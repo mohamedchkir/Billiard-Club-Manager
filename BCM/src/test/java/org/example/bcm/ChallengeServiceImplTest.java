@@ -221,6 +221,27 @@ public class ChallengeServiceImplTest {
                 () -> challengeService.joinChallenge(challengeId, userId));
     }
 
+    @Test
+    void joinChallenge_NotAllowedToJoinOwnChallenge_Failure() {
+        // Prepare test data
+        long challengeId = 1L;
+        long userId = 2L;
+
+        Challenge challenge = new Challenge();
+        challenge.setId(challengeId);
+        User challenger = new User();
+        challenger.setId(userId); // Set the challenger same as the joining user
+        challenge.setChallenger(challenger);
+
+        // Stub repository method calls
+        when(challengeRepository.findById(challengeId)).thenReturn(Optional.of(challenge));
+        when(userRepository.findById(userId)).thenReturn(Optional.of(challenger));
+
+        // Verify that the method throws NotAllowedToJoinException
+        assertThrows(NotAllowedToJoinException.class,
+                () -> challengeService.joinChallenge(challengeId, userId));
+    }
+
 
 
 
