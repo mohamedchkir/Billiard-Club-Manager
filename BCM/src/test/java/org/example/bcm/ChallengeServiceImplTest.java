@@ -185,6 +185,23 @@ public class ChallengeServiceImplTest {
                 () -> challengeService.joinChallenge(challengeId, userId));
     }
 
+    @Test
+    void joinChallenge_UserNotFound_Failure() {
+        // Prepare test data
+        long challengeId = 1L;
+        long userId = 2L;
+
+        Challenge challenge = new Challenge();
+        challenge.setId(challengeId);
+
+        // Stub repository method calls
+        when(challengeRepository.findById(challengeId)).thenReturn(Optional.of(challenge));
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+
+        // Verify that the method throws ResourceNotFoundException
+        assertThrows(ResourceNotFoundException.class,
+                () -> challengeService.joinChallenge(challengeId, userId));
+    }
 
 
 
