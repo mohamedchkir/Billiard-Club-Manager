@@ -83,7 +83,6 @@ public class UserServiceImpl implements UserDetailsService,UserService {
         if (users.isEmpty()) {
             throw new ServiceNotFoundException("No users found");
         }
-
         return users.stream()
                 .map(UserMapper::toDto)
                 .collect(Collectors.toList());
