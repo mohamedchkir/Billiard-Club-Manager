@@ -7,15 +7,15 @@ import org.example.bcm.core.model.entity.City;
 public class CityMapper {
 
     public static City toEntity(CityRequestDto cityRequestDto) {
-        City city = new City();
-        city.setName(cityRequestDto.getName());
-        return city;
+        return City.builder()
+                .name(cityRequestDto.getName())
+                .build();
     }
 
     public static CityResponseDto toDto(City city) {
-        CityResponseDto dto = new CityResponseDto();
-        dto.setId(city.getId());
-        dto.setName(city.getName());
-        return dto;
+        return CityResponseDto.builder()
+                .id(city.getId())
+                .name(city.getName())
+                .build();
     }
 }
