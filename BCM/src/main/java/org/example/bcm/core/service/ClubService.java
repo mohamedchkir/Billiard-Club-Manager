@@ -3,6 +3,8 @@ package org.example.bcm.core.service;
 import org.example.bcm.core.model.dto.request.ClubRequestDto;
 import org.example.bcm.core.model.dto.request.update.UpdateClubRequestDto;
 import org.example.bcm.core.model.dto.response.ClubResponseDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +15,7 @@ public interface ClubService {
 
     ClubResponseDto getClubById(Long clubId);
 
-    List<ClubResponseDto> getAllClubs();
+    Page<ClubResponseDto> getAllClubs(Pageable pageable);
 
     ClubResponseDto updateClub(UpdateClubRequestDto updateClubRequestDto);
 

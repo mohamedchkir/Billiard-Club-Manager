@@ -18,6 +18,8 @@ import org.example.bcm.core.repository.ServiceRepository;
 import org.example.bcm.core.repository.TableRepository;
 import org.example.bcm.core.service.ClubService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -60,14 +62,14 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    public List<ClubResponseDto> getAllClubs() {
-        List<Club> clubs = clubRepository.findAll();
-        if (clubs.isEmpty()) {
+    public Page<ClubResponseDto> getAllClubs(Pageable pageable) {
+        Page<Club> clubs = clubRepository.findAll(pageable);
+
+        if (clubs.getContent().isEmpty()) {
             throw new ServiceNotFoundException("No clubs found");
         }
-        return clubs.stream()
-                .map(ClubMapper::toDto)
-                .collect(Collectors.toList());
+
+        return clubs.map(ClubMapper::toDto);
     }
 
     @Override
