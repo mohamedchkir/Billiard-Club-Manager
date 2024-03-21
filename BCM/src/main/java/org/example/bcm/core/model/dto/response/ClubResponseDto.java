@@ -19,6 +19,7 @@ public class ClubResponseDto implements Serializable {
     private LocalTime openingHour;
     private LocalTime closeHour;
     private Integer numberOfToken;
+    private String imageUrl;
     private CityResponseDto city;
     private List<ServiceResponseDto> services;
 }

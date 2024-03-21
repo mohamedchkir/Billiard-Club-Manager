@@ -20,6 +20,7 @@ public class ClubMapper {
                 .openingHour(requestDto.getOpeningHour())
                 .closeHour(requestDto.getCloseHour())
                 .numberOfToken(requestDto.getNumberOfToken())
+                .imageUrl(requestDto.getImageUrl())
                 .city(city)
                 .services(services)
                 .build();
@@ -34,6 +35,7 @@ public class ClubMapper {
                 .openingHour(club.getOpeningHour())
                 .closeHour(club.getCloseHour())
                 .numberOfToken(club.getNumberOfToken())
+                .imageUrl(club.getImageUrl())
                 .city(CityMapper.toDto(club.getCity()))
                 .services(club.getServices().stream()
                         .map(ServiceMapper::toDto)
@@ -48,6 +50,7 @@ public class ClubMapper {
         existingClub.setOpeningHour(updateDto.getOpeningHour());
         existingClub.setCloseHour(updateDto.getCloseHour());
         existingClub.setNumberOfToken(updateDto.getNumberOfToken());
+        existingClub.setImageUrl(updateDto.getImageUrl());
         existingClub.setCity(city);
         existingClub.setServices(services);
     }
