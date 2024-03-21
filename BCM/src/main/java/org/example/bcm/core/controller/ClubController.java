@@ -7,6 +7,8 @@ import org.example.bcm.core.model.dto.request.update.UpdateClubRequestDto;
 import org.example.bcm.core.model.dto.response.ClubResponseDto;
 import org.example.bcm.core.service.ClubService;
 import org.example.bcm.shared.Const.AppEndpoint;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +36,9 @@ public class ClubController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ClubResponseDto>> getAllClubs() {
-        List<ClubResponseDto> clubs = clubService.getAllClubs();
+    public ResponseEntity<Page<ClubResponseDto>> getAllClubs(@RequestParam Integer page, @RequestParam Integer size) {
+        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        Page<ClubResponseDto> clubs = clubService.getAllClubs(pageable);
         return ResponseEntity.ok(clubs);
     }
 
@@ -52,7 +55,7 @@ public class ClubController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<ClubResponseDto>> searchClubs(@RequestParam(required = false) String firstName ,@RequestParam(required = false) Long cityId) {
+    public ResponseEntity<List<ClubResponseDto>> searchClubs(@RequestParam(required = false) String firstName, @RequestParam(required = false) Long cityId) {
         List<ClubResponseDto> clubs = clubService.filterClubs(firstName, cityId);
         return ResponseEntity.ok(clubs);
     }

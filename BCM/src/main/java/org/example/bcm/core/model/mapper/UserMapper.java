@@ -21,6 +21,7 @@ public class UserMapper {
                 .email(user.getEmail())
                 .numberOfToken(user.getNumberOfToken())
                 .city(CityMapper.toDto(user.getCity()))
+                .role(user.getRole().getName())
                 .build();
     }
     public static void updateEntity(User existingUser, UpdateUserRequestDto updateUserRequestDto, City city) {

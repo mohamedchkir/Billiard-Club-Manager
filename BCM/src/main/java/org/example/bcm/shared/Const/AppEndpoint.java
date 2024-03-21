@@ -13,4 +13,5 @@ public class AppEndpoint {
     public static final String TABLE_ENDPOINT = VERSION + "/table";
     public static final String USER_ENDPOINT = VERSION + "/user";
     public static final String CHALLENGE_ENDPOINT = VERSION + "/challenge";
+    public static final String CITY_ENDPOINT = VERSION + "/city";
 }

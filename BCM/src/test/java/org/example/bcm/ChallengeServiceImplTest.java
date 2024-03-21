@@ -272,6 +272,4 @@ public class ChallengeServiceImplTest {
                 () -> challengeService.joinChallenge(challengeId, userId));
     }
 
-
-
 }
