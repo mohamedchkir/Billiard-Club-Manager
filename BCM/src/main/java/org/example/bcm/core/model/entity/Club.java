@@ -24,6 +24,7 @@ public class Club {
     private LocalTime openingHour;
     private LocalTime closeHour;
     private Integer numberOfToken;
+    private String imageUrl;
 
     @ManyToOne
     @JoinColumn(name = "City_id")

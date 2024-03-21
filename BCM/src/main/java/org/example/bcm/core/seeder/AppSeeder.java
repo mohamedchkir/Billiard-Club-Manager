@@ -177,6 +177,7 @@ public class AppSeeder implements CommandLineRunner {
                     .openingHour(LocalTime.of(8, 0))
                     .closeHour(LocalTime.of(22, 0))
                     .numberOfToken(0)
+                    .imageUrl("https://dynamic-media-cdn.tripadvisor.com/media/photo-o/07/e3/70/28/b-o-binh-billiards-club.jpg?w=1200&h=-1&s=1")
                     .city(cityRepository.findById(1L).orElseThrow(() -> new NoSuchElementException("City not found with ID: 1")))
                     .build();
             Club club2 = Club.builder()
@@ -188,6 +189,7 @@ public class AppSeeder implements CommandLineRunner {
                     .closeHour(LocalTime.of(22, 0))
                     .numberOfToken(0)
                     .city(cityRepository.findById(2L).orElseThrow(() -> new NoSuchElementException("City not found with ID: 2")))
+                    .imageUrl("https://dynamic-media-cdn.tripadvisor.com/media/photo-o/07/e3/70/28/b-o-binh-billiards-club.jpg?w=1200&h=-1&s=1")
                     .build();
 
             clubRepository.saveAll(List.of(club1, club2));

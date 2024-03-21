@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalTime;
 import java.util.Set;
@@ -26,6 +27,10 @@ public class ClubRequestDto {
     private LocalTime closeHour;
 
     private Integer numberOfToken;
+
+    private String imageUrl;
+
+    private MultipartFile file;
 
     @NotNull(message = "City ID is required")
     private Long cityId;
