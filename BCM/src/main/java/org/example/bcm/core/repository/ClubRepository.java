@@ -11,7 +11,7 @@ import java.util.List;
 public interface ClubRepository extends JpaRepository<Club, Long> {
 
     @Query("SELECT c FROM Club c WHERE (c.name LIKE %:name% OR :name IS NULL) AND (c.city.id = :CityId OR :CityId IS NULL)")
-    List<Club> filter(String name, Long CityId);
+    Page<Club> filter(Pageable pageable ,String name, Long CityId);
 
     Page<Club> findAll(Pageable pageable);
 }

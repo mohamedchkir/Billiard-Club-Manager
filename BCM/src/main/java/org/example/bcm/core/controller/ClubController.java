@@ -41,12 +41,7 @@ public class ClubController {
         return ResponseEntity.ok(club);
     }
 
-    @GetMapping
-    public ResponseEntity<Page<ClubResponseDto>> getAllClubs(@RequestParam Integer page, @RequestParam Integer size) {
-        Pageable pageable = Pageable.ofSize(size).withPage(page);
-        Page<ClubResponseDto> clubs = clubService.getAllClubs(pageable);
-        return ResponseEntity.ok(clubs);
-    }
+
 
     @PutMapping()
     public ResponseEntity<ClubResponseDto> updateClub(@Valid @ModelAttribute UpdateClubRequestDto updateClubRequestDto) {
@@ -66,8 +61,16 @@ public class ClubController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<ClubResponseDto>> searchClubs(@RequestParam(required = false) String firstName, @RequestParam(required = false) Long cityId) {
-        List<ClubResponseDto> clubs = clubService.filterClubs(firstName, cityId);
+    public ResponseEntity<Page<ClubResponseDto>> searchClubs(@RequestParam(required = false) String name, @RequestParam(required = false) Long cityId,@RequestParam Integer page, @RequestParam Integer size) {
+        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        Page<ClubResponseDto> clubs = clubService.filterClubs(pageable,name, cityId );
+        return ResponseEntity.ok(clubs);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<ClubResponseDto>> getAllClubs(@RequestParam Integer page, @RequestParam Integer size) {
+        Pageable pageable = Pageable.ofSize(size).withPage(page);
+        Page<ClubResponseDto> clubs = clubService.getAllClubs(pageable);
         return ResponseEntity.ok(clubs);
     }
 }

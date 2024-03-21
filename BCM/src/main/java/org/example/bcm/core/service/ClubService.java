@@ -21,5 +21,5 @@ public interface ClubService {
 
     void deleteClub(Long clubId);
 
-    List<ClubResponseDto> filterClubs(String name, Long cityId);
+    Page<ClubResponseDto> filterClubs(Pageable pageable,String name, Long cityId);
 }

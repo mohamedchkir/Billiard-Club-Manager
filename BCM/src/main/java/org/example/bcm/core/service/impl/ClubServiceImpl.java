@@ -122,13 +122,12 @@ public class ClubServiceImpl implements ClubService {
         clubRepository.delete(club);
     }
 
-    public List<ClubResponseDto> filterClubs(String name, Long cityId) {
-        List<Club> clubs = clubRepository.filter(name, cityId);
-        if (clubs.isEmpty()) {
+    public Page<ClubResponseDto> filterClubs(Pageable pageable,String name, Long cityId) {
+        Page<Club> clubs = clubRepository.filter(pageable,name, cityId);
+        if (clubs.getContent().isEmpty()) {
             throw new ServiceNotFoundException("No clubs found");
         }
-        return clubs.stream()
-                .map(ClubMapper::toDto)
-                .collect(Collectors.toList());
+        return clubs.map(ClubMapper::toDto);
     }
+
 }
