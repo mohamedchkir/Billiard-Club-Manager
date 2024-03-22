@@ -8,4 +8,6 @@ import java.util.List;
 @Service
 public interface CityService {
     List<CityResponseDto> getAllCities();
+
+    void deleteCity(Long cityId);
 }

@@ -6,9 +6,7 @@ import org.example.bcm.core.service.CityService;
 import org.example.bcm.shared.Const.AppEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +21,12 @@ public class CityController {
     @GetMapping
     public ResponseEntity<List<CityResponseDto>> getAllCities() {
         return ResponseEntity.ok(cityService.getAllCities());
+    }
+
+    @DeleteMapping("/{cityId}")
+    public ResponseEntity<Void> deleteCity( @PathVariable Long cityId) {
+        cityService.deleteCity(cityId);
+        return ResponseEntity.noContent().build();
     }
 
 }

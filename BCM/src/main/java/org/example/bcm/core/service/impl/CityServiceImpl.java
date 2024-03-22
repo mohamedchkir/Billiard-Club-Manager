@@ -30,4 +30,11 @@ public class CityServiceImpl implements CityService {
                 .collect(Collectors.toList());
 
     }
+
+    @Override
+    public void deleteCity(Long cityId) {
+        City city = cityRepository.findById(cityId)
+                .orElseThrow(() -> new ServiceNotFoundException("City not found"));
+        cityRepository.delete(city);
+    }
 }
