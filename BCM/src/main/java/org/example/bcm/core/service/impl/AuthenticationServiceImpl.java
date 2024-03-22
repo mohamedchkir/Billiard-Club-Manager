@@ -1,6 +1,7 @@
 package org.example.bcm.core.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.example.bcm.common.exception.NotAllowedToJoinException;
 import org.example.bcm.core.model.dto.request.UserLoginRequestDto;
 import org.example.bcm.core.model.dto.request.UserRegisterRequestDto;
 import org.example.bcm.core.model.dto.response.AuthenticationResponseDto;
@@ -29,10 +30,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponseDto register(UserRegisterRequestDto registerDto) {
+        if (userRepository.existsByEmail(registerDto.getEmail())) {
+            throw new NotAllowedToJoinException("Email already exists");
+        }
+
         registerDto.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
         User user = modelMapper.map(registerDto, User.class);
         user.setRole(Role.builder().id(1L).build());
+        user.setNumberOfToken(0);
 
         User saved = userRepository.save(user);
 
