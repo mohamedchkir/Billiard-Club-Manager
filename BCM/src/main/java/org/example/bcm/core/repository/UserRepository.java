@@ -24,5 +24,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
     List<User> filterUsers(@Param("firstName") String firstName,
                                             @Param("lastName") String lastName,
                                             @Param("cityId") Long cityId);
+
+    boolean existsByEmail(String email);
 }
 

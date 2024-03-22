@@ -1,16 +1,17 @@
 package org.example.bcm.core.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.bcm.common.exception.ResourceNotFoundException;
 import org.example.bcm.common.exception.ServiceNotFoundException;
 import org.example.bcm.core.model.dto.request.update.UpdateUserCityRequestDto;
 import org.example.bcm.core.model.dto.request.update.UpdateUserRequestDto;
-import org.example.bcm.core.model.dto.response.UserResponseDto;
 import org.example.bcm.core.model.dto.response.UserSimpleResponseDto;
 import org.example.bcm.core.model.entity.City;
 import org.example.bcm.core.model.entity.User;
 import org.example.bcm.core.model.mapper.UserMapper;
 import org.example.bcm.core.repository.CityRepository;
+import org.example.bcm.core.repository.TokenRepository;
 import org.example.bcm.core.repository.UserRepository;
 import org.example.bcm.core.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,9 +24,11 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserDetailsService,UserService {
+public class UserServiceImpl implements UserDetailsService, UserService {
     private final UserRepository userRepository;
     private final CityRepository cityRepository;
+    private final TokenRepository tokenRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username)
@@ -55,12 +58,15 @@ public class UserServiceImpl implements UserDetailsService,UserService {
                 .collect(Collectors.toList());
     }
 
-    @Override
+    @Transactional
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
+
+        tokenRepository.deleteByUserId(userId);
         userRepository.delete(user);
     }
+
 
     @Override
     public UserSimpleResponseDto updateUser(UpdateUserRequestDto updateUserRequestDto) {
@@ -70,7 +76,7 @@ public class UserServiceImpl implements UserDetailsService,UserService {
         City city = cityRepository.findById(updateUserRequestDto.getCityId())
                 .orElseThrow(() -> new ResourceNotFoundException("City", "id", updateUserRequestDto.getCityId()));
 
-        UserMapper.updateEntity(existingUser, updateUserRequestDto,city);
+        UserMapper.updateEntity(existingUser, updateUserRequestDto, city);
 
         User updatedUser = userRepository.save(existingUser);
         return UserMapper.toDto(updatedUser);
