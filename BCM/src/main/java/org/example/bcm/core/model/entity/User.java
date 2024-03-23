@@ -27,6 +27,7 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private Integer numberOfToken;
+    private String ImageUrl;
 
     @ManyToOne
     private Role role;

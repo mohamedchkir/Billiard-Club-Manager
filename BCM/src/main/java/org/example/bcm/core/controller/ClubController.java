@@ -15,18 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(AppEndpoint.CLUB_ENDPOINT)
 @RequiredArgsConstructor
 public class ClubController {
 
-
     private final ClubService clubService;
     private final S3Service s3Service;
-
-
     @PostMapping
     public ResponseEntity<ClubResponseDto> createClub(@Valid @ModelAttribute ClubRequestDto clubRequestDto) {
         String imageUrl = s3Service.uploadFile(clubRequestDto.getFile());
@@ -40,7 +35,6 @@ public class ClubController {
         ClubResponseDto club = clubService.getClubById(clubId);
         return ResponseEntity.ok(club);
     }
-
 
 
     @PutMapping()
@@ -61,9 +55,9 @@ public class ClubController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Page<ClubResponseDto>> searchClubs(@RequestParam(required = false) String name, @RequestParam(required = false) Long cityId,@RequestParam Integer page, @RequestParam Integer size) {
+    public ResponseEntity<Page<ClubResponseDto>> searchClubs(@RequestParam(required = false) String name, @RequestParam(required = false) Long cityId, @RequestParam Integer page, @RequestParam Integer size) {
         Pageable pageable = Pageable.ofSize(size).withPage(page);
-        Page<ClubResponseDto> clubs = clubService.filterClubs(pageable,name, cityId );
+        Page<ClubResponseDto> clubs = clubService.filterClubs(pageable, name, cityId);
         return ResponseEntity.ok(clubs);
     }
 
