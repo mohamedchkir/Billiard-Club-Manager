@@ -54,4 +54,10 @@ public class UserController {
         List<UserSimpleResponseDto> users = userService.filterUsers(firstName, lastName, cityId);
         return ResponseEntity.ok(users);
     }
+
+    @PatchMapping("/change-role/{userId}")
+    public ResponseEntity<UserSimpleResponseDto> changeRole(@PathVariable Long userId) {
+        UserSimpleResponseDto updatedUser = userService.changeRole(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
+    }
 }
