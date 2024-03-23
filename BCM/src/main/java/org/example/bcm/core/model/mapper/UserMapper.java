@@ -22,6 +22,7 @@ public class UserMapper {
                 .numberOfToken(user.getNumberOfToken())
                 .city(CityMapper.toDto(user.getCity()))
                 .role(user.getRole().getName())
+                .imageUrl(user.getImageUrl())
                 .build();
     }
     public static void updateEntity(User existingUser, UpdateUserRequestDto updateUserRequestDto, City city) {
@@ -30,5 +31,6 @@ public class UserMapper {
         existingUser.setTelephone(updateUserRequestDto.getTelephone());
         existingUser.setCity(city);
         existingUser.setNumberOfToken(updateUserRequestDto.getNumberOfToken());
+        existingUser.setImageUrl(updateUserRequestDto.getImageUrl());
     }
 }

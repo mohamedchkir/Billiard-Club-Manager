@@ -28,4 +28,9 @@ public class UpdateUserRequestDto {
     @NotNull(message = "Number of tokens is required")
     @Positive(message = "Number of tokens must be a positive value")
     private Integer numberOfToken;
+
+    @NotNull(message = "Image is required")
+    @NotEmpty(message = "Image is required")
+    @NotBlank(message = "Image is required")
+    private String imageUrl;
 }

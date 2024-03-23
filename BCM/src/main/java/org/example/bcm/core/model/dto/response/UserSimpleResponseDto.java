@@ -13,5 +13,6 @@ public class UserSimpleResponseDto {
     private String email;
     private Integer numberOfToken;
     private CityResponseDto city;
+    private String imageUrl;
     private String role;
 }

@@ -61,6 +61,8 @@ public class AuthenticationController {
                             .password(user.getPassword())
                             .permissions(user.getRole().getPermissions().stream().map(Permission::getName).toList())
                             .role(user.getRole().getName())
+                            .city(user.getCity().getName())
+                            .imageUrl(user.getImageUrl())
                             .build()
             );
         }
