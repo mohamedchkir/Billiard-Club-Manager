@@ -21,6 +21,7 @@ public class TableMapper {
         dto.setId(table.getId());
         dto.setTableType(table.getTableType());
         dto.setTokensNeeded(table.getTokensNeeded());
+        dto.setClub(ClubMapper.toDto(table.getClub()));
 
         return dto;
     }
