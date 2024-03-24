@@ -99,8 +99,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public List<UserSimpleResponseDto> filterUsers(String firstName, String lastName, Long cityId) {
-        List<User> users = userRepository.filterUsers(firstName, lastName, cityId);
+    public List<UserSimpleResponseDto> filterUsers(String firstNameOrLastName, Long cityId) {
+        List<User> users = userRepository.filterUsers(firstNameOrLastName, cityId);
 
         if (users.isEmpty()) {
             throw new ServiceNotFoundException("No users found");

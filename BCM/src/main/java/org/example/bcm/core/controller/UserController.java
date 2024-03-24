@@ -50,8 +50,8 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<UserSimpleResponseDto>> searchClubs(@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName, @RequestParam(required = false) Long cityId) {
-        List<UserSimpleResponseDto> users = userService.filterUsers(firstName, lastName, cityId);
+    public ResponseEntity<List<UserSimpleResponseDto>> searchClubs(@RequestParam(required = false) String firstNameOrLastName, @RequestParam(required = false) Long cityId) {
+        List<UserSimpleResponseDto> users = userService.filterUsers(firstNameOrLastName, cityId);
         return ResponseEntity.ok(users);
     }
 

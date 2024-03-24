@@ -18,6 +18,6 @@ public interface UserService {
 
     UserSimpleResponseDto updateUser(UpdateUserRequestDto updateUserRequestDto);
 
-    List<UserSimpleResponseDto> filterUsers(String firstName, String lastName, Long cityId);
+    List<UserSimpleResponseDto> filterUsers(String firstNameOrLastName, Long cityId);
 
 }

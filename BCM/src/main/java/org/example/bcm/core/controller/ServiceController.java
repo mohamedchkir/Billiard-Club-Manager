@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.example.bcm.core.model.dto.request.ServiceRequestDto;
 import org.example.bcm.core.model.dto.request.update.UpdateServiceRequestDto;
 import org.example.bcm.core.model.dto.response.ServiceResponseDto;
+import org.example.bcm.core.service.S3Service;
 import org.example.bcm.core.service.ServiceService;
 import org.example.bcm.shared.Const.AppEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,16 @@ public class ServiceController {
 
 
     private final ServiceService serviceService;
+    private final S3Service s3Service;
+
 
     @PostMapping
-    public ResponseEntity<ServiceResponseDto> createService(@Valid @RequestBody ServiceRequestDto serviceRequestDto) {
+    public ResponseEntity<ServiceResponseDto> createService(@Valid @ModelAttribute ServiceRequestDto serviceRequestDto) {
+        String imageUrl = s3Service.uploadFile(serviceRequestDto.getFile());
+        serviceRequestDto.setImageUrl(imageUrl);
         ServiceResponseDto createdService = serviceService.createService(serviceRequestDto);
         return new ResponseEntity<>(createdService, HttpStatus.CREATED);
+
     }
 
     @GetMapping("/{serviceId}")
