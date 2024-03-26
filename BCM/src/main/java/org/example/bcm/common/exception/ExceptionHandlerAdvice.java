@@ -50,4 +50,11 @@ public class ExceptionHandlerAdvice {
                 .status(HttpStatus.NOT_ACCEPTABLE)
                 .body(StandardApiResponse.error(ex.getMessage()));
     }
+
+    @ExceptionHandler(FileUploadErrorException.class)
+    public ResponseEntity<StandardApiResponse<?>> handleFileUploadErrorException(FileUploadErrorException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(StandardApiResponse.error(ex.getMessage()));
+    }
 }

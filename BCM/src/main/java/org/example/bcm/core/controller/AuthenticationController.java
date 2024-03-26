@@ -67,7 +67,7 @@ public class AuthenticationController {
             );
         }
 
-        return ResponseEntity.ok(
+        return ResponseEntity.badRequest().body(
                 UserResponseDto.builder()
                         .email("anonymous")
                         .role("anonymous")
