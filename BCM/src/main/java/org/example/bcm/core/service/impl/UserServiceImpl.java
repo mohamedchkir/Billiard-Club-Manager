@@ -8,9 +8,11 @@ import org.example.bcm.core.model.dto.request.update.UpdateUserCityRequestDto;
 import org.example.bcm.core.model.dto.request.update.UpdateUserRequestDto;
 import org.example.bcm.core.model.dto.response.UserSimpleResponseDto;
 import org.example.bcm.core.model.entity.City;
+import org.example.bcm.core.model.entity.Role;
 import org.example.bcm.core.model.entity.User;
 import org.example.bcm.core.model.mapper.UserMapper;
 import org.example.bcm.core.repository.CityRepository;
+import org.example.bcm.core.repository.RoleRepository;
 import org.example.bcm.core.repository.TokenRepository;
 import org.example.bcm.core.repository.UserRepository;
 import org.example.bcm.core.service.UserService;
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private final UserRepository userRepository;
     private final CityRepository cityRepository;
     private final TokenRepository tokenRepository;
+    private final RoleRepository roleRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -67,6 +70,19 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         userRepository.delete(user);
     }
 
+    @Override
+    public UserSimpleResponseDto changeRole(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "Id", userId));
+
+        Role managerRole = roleRepository.findByName("MANAGER").orElseThrow(() -> new ResourceNotFoundException("Role", "name", "MANAGER"));
+        Role clientRole = roleRepository.findByName("CLIENT").orElseThrow(() -> new ResourceNotFoundException("Role", "name", "CLIENT"));
+
+        user.setRole(user.getRole().getName().equals("MANAGER") ? clientRole : managerRole);
+        User updatedUser = userRepository.save(user);
+        return UserMapper.toDto(updatedUser);
+    }
+
 
     @Override
     public UserSimpleResponseDto updateUser(UpdateUserRequestDto updateUserRequestDto) {
@@ -83,8 +99,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public List<UserSimpleResponseDto> filterUsers(String firstName, String lastName, Long cityId) {
-        List<User> users = userRepository.filterUsers(firstName, lastName, cityId);
+    public List<UserSimpleResponseDto> filterUsers(String firstNameOrLastName, Long cityId) {
+        List<User> users = userRepository.filterUsers(firstNameOrLastName, cityId);
 
         if (users.isEmpty()) {
             throw new ServiceNotFoundException("No users found");

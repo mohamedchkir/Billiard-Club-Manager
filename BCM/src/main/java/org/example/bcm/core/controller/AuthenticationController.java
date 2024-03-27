@@ -14,6 +14,7 @@ import org.example.bcm.core.service.TokenService;
 import org.example.bcm.shared.Const.AppEndpoint;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,7 +60,7 @@ public class AuthenticationController {
                             .telephone(user.getTelephone())
                             .numberOfToken(user.getNumberOfToken())
                             .password(user.getPassword())
-                            .permissions(user.getRole().getPermissions().stream().map(Permission::getName).toList())
+                            .permissions(user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList())
                             .role(user.getRole().getName())
                             .city(user.getCity().getName())
                             .imageUrl(user.getImageUrl())
@@ -67,7 +68,7 @@ public class AuthenticationController {
             );
         }
 
-        return ResponseEntity.ok(
+        return ResponseEntity.badRequest().body(
                 UserResponseDto.builder()
                         .email("anonymous")
                         .role("anonymous")

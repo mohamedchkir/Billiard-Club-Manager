@@ -18,11 +18,10 @@ public interface UserRepository extends JpaRepository<User, Long>{
             "JOIN FETCH u.role r " +
             "JOIN FETCH u.city c " +
             "WHERE (:firstName IS NULL OR u.firstName LIKE %:firstName%) " +
-            "AND (:lastName IS NULL OR u.lastName LIKE %:lastName%) " +
+            "AND (:firstName IS NULL OR u.lastName LIKE %:firstName%) " +
             "AND (:cityId IS NULL OR c.id = :cityId) " +
             "AND r.name = 'CLIENT'")
-    List<User> filterUsers(@Param("firstName") String firstName,
-                                            @Param("lastName") String lastName,
+    List<User> filterUsers(@Param("firstName") String firstNameOrLastName,
                                             @Param("cityId") Long cityId);
 
     boolean existsByEmail(String email);

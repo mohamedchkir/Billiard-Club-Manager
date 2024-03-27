@@ -12,4 +12,5 @@ public class TableResponseDto {
     private Long id;
     private TableType tableType;
     private Integer tokensNeeded;
+    private ClubResponseDto club;
 }
