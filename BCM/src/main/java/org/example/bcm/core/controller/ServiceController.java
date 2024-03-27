@@ -11,6 +11,7 @@ import org.example.bcm.shared.Const.AppEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class ServiceController {
     private final S3Service s3Service;
 
 
+    @PreAuthorize("hasAuthority('WRITE_SERVICE')")
     @PostMapping
     public ResponseEntity<ServiceResponseDto> createService(@Valid @ModelAttribute ServiceRequestDto serviceRequestDto) {
         String imageUrl = s3Service.uploadFile(serviceRequestDto.getFile());
@@ -34,24 +36,28 @@ public class ServiceController {
 
     }
 
+    @PreAuthorize("hasAuthority('READ_SERVICE')")
     @GetMapping("/{serviceId}")
     public ResponseEntity<ServiceResponseDto> getServiceById(@PathVariable Long serviceId) {
         ServiceResponseDto service = serviceService.getServiceById(serviceId);
         return ResponseEntity.ok(service);
     }
 
+    @PreAuthorize("hasAuthority('READ_SERVICE')")
     @GetMapping
     public ResponseEntity<List<ServiceResponseDto>> getAllServices() {
         List<ServiceResponseDto> services = serviceService.getAllServices();
         return ResponseEntity.ok(services);
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_SERVICE')")
     @PutMapping
     public ResponseEntity<ServiceResponseDto> updateService(@Valid @RequestBody UpdateServiceRequestDto updateServiceRequestDto) {
         ServiceResponseDto updatedService = serviceService.updateService(updateServiceRequestDto);
         return ResponseEntity.ok(updatedService);
     }
 
+    @PreAuthorize("hasAuthority('DELETE_SERVICE')")
     @DeleteMapping("/{serviceId}")
     public ResponseEntity<Void> deleteService(@PathVariable Long serviceId) {
         serviceService.deleteService(serviceId);

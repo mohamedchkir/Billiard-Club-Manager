@@ -36,7 +36,6 @@ public class AppSeeder implements CommandLineRunner {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private Map<String, Permission> permissions = Map.of();
     private Map<String, Role> roles = Map.of();
 
     @Transactional
@@ -50,53 +49,117 @@ public class AppSeeder implements CommandLineRunner {
     }
 
     private void savePermissions() {
-        if (permissionRepository.count() == 0) {
-            Permission readClub = Permission.builder().name("READ_CLUB").build();
-            Permission writeClub = Permission.builder().name("WRITE_CLUB").build();
-            Permission updateClub = Permission.builder().name("UPDATE_CLUB").build();
-            Permission deleteClub = Permission.builder().name("DELETE_CLUB").build();
 
-            Permission manageCity = Permission.builder().name("MANAGE_CITY").build();
-
-            permissionRepository.saveAll(List.of(readClub, writeClub, updateClub, deleteClub, manageCity));
-            permissions = Map.of(
-                    "READ_CLUB", readClub,
-                    "WRITE_CLUB", writeClub,
-                    "UPDATE_CLUB", updateClub,
-                    "DELETE_CLUB", deleteClub,
-                    "MANAGE_CITY", manageCity
-            );
-
-            saveRoles();
+        if (permissionRepository.count() != 0) {
+            return;
         }
-    }
+        Permission readClub = Permission.builder().name("READ_CLUB").build();
+        Permission writeClub = Permission.builder().name("WRITE_CLUB").build();
+        Permission updateClub = Permission.builder().name("UPDATE_CLUB").build();
+        Permission deleteClub = Permission.builder().name("DELETE_CLUB").build();
 
-    private void saveRoles() {
-        if (roleRepository.count() == 0) {
-            Role manager = Role.builder().name("MANAGER").permissions(List.of(
-                    permissions.get("READ_CLUB"),
-                    permissions.get("WRITE_CLUB"),
-                    permissions.get("UPDATE_CLUB"),
-                    permissions.get("DELETE_CLUB"),
-                    permissions.get("MANAGE_CITY")
-            )).build();
+        Permission writeCity = Permission.builder().name("WRITE_CITY").build();
+        Permission updateCity = Permission.builder().name("UPDATE_CITY").build();
+        Permission deleteCity = Permission.builder().name("DELETE_CITY").build();
+        Permission readCity = Permission.builder().name("READ_CITY").build();
 
-            Role client = Role.builder().name("CLIENT").permissions(List.of(
-                    permissions.get("READ_CLUB"),
-                    permissions.get("WRITE_CLUB"),
-                    permissions.get("UPDATE_CLUB"),
-                    permissions.get("UPDATE_CLUB")
-            )).build();
+        Permission readService = Permission.builder().name("READ_SERVICE").build();
+        Permission writeService = Permission.builder().name("WRITE_SERVICE").build();
+        Permission updateService = Permission.builder().name("UPDATE_SERVICE").build();
+        Permission deleteService = Permission.builder().name("DELETE_SERVICE").build();
 
-            roleRepository.saveAll(List.of(manager, client));
+        Permission readTable = Permission.builder().name("READ_TABLE").build();
+        Permission writeTable = Permission.builder().name("WRITE_TABLE").build();
+        Permission updateTable = Permission.builder().name("UPDATE_TABLE").build();
+        Permission deleteTable = Permission.builder().name("DELETE_TABLE").build();
 
-            roles = Map.of(
-                    "CLIENT", client,
-                    "MANAGER", manager
-            );
+        Permission readUser = Permission.builder().name("READ_USER").build();
+        Permission writeUser = Permission.builder().name("WRITE_USER").build();
+        Permission updateUser = Permission.builder().name("UPDATE_USER").build();
+        Permission deleteUser = Permission.builder().name("DELETE_USER").build();
 
-            saveUser();
-        }
+        Permission challengeRead = Permission.builder().name("CHALLENGE_READ").build();
+        Permission challengeWrite = Permission.builder().name("CHALLENGE_WRITE").build();
+        Permission challengeUpdate = Permission.builder().name("CHALLENGE_UPDATE").build();
+        Permission challengeDelete = Permission.builder().name("CHALLENGE_DELETE").build();
+
+        List<Permission> permissionList = new ArrayList<>();
+        permissionList.addAll(
+                List.of(
+                        readClub,
+                        writeClub,
+                        updateClub,
+                        deleteClub,
+                        writeCity,
+                        updateCity,
+                        deleteCity,
+                        readCity,
+                        readService,
+                        writeService,
+                        updateService,
+                        deleteService,
+                        readTable,
+                        writeTable,
+                        updateTable,
+                        deleteTable,
+                        readUser,
+                        writeUser,
+                        updateUser,
+                        deleteUser,
+                        challengeRead,
+                        challengeWrite,
+                        challengeUpdate,
+                        challengeDelete
+                )
+        );
+
+
+        permissionRepository.saveAll(permissionList);
+
+
+        Role manager = Role.builder().name("MANAGER").permissions(List.of(
+                readClub,
+                writeClub,
+                updateClub,
+                deleteClub,
+                writeCity,
+                updateCity,
+                deleteCity,
+                readCity,
+                readService,
+                writeService,
+                updateService,
+                deleteService,
+                readTable,
+                writeTable,
+                updateTable,
+                deleteTable,
+                readUser,
+                writeUser,
+                updateUser,
+                deleteUser)).build();
+
+        Role client = Role.builder().name("CLIENT").permissions(List.of(
+                readClub,
+                readCity,
+                readService,
+                readTable,
+                readUser,
+                challengeRead,
+                challengeWrite,
+                challengeUpdate,
+                challengeDelete
+        )).build();
+
+        roleRepository.saveAll(List.of(manager, client));
+        roles = Map.of(
+                "CLIENT", client,
+                "MANAGER", manager
+        );
+
+        saveUser();
+
+
     }
 
     private void saveUser() {

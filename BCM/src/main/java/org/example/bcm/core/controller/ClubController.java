@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +23,8 @@ public class ClubController {
 
     private final ClubService clubService;
     private final S3Service s3Service;
+
+    @PreAuthorize("hasAuthority('WRITE_CLUB')")
     @PostMapping
     public ResponseEntity<ClubResponseDto> createClub(@Valid @ModelAttribute ClubRequestDto clubRequestDto) {
         String imageUrl = s3Service.uploadFile(clubRequestDto.getFile());
@@ -30,6 +33,7 @@ public class ClubController {
         return new ResponseEntity<>(createdClub, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('READ_CLUB')")
     @GetMapping("/{clubId}")
     public ResponseEntity<ClubResponseDto> getClubById(@PathVariable Long clubId) {
         ClubResponseDto club = clubService.getClubById(clubId);
@@ -37,6 +41,7 @@ public class ClubController {
     }
 
 
+    @PreAuthorize("hasAuthority('UPDATE_CLUB')")
     @PutMapping()
     public ResponseEntity<ClubResponseDto> updateClub(@Valid @ModelAttribute UpdateClubRequestDto updateClubRequestDto) {
         MultipartFile file = updateClubRequestDto.getFile();
@@ -48,12 +53,14 @@ public class ClubController {
         return ResponseEntity.ok(updatedClub);
     }
 
+    @PreAuthorize("hasAuthority('DELETE_CLUB')")
     @DeleteMapping("/{clubId}")
     public ResponseEntity<Void> deleteClub(@PathVariable Long clubId) {
         clubService.deleteClub(clubId);
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAuthority('READ_CLUB')")
     @GetMapping("/search")
     public ResponseEntity<Page<ClubResponseDto>> searchClubs(@RequestParam(required = false) String name, @RequestParam(required = false) Long cityId, @RequestParam Integer page, @RequestParam Integer size) {
         Pageable pageable = Pageable.ofSize(size).withPage(page);
@@ -61,6 +68,7 @@ public class ClubController {
         return ResponseEntity.ok(clubs);
     }
 
+    @PreAuthorize("hasAuthority('READ_CLUB')")
     @GetMapping
     public ResponseEntity<Page<ClubResponseDto>> getAllClubs(@RequestParam Integer page, @RequestParam Integer size) {
         Pageable pageable = Pageable.ofSize(size).withPage(page);
