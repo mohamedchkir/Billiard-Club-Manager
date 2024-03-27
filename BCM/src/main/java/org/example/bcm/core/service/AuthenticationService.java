@@ -13,4 +13,7 @@ public interface AuthenticationService {
     AuthenticationResponseDto login(UserLoginRequestDto user);
 
     void logout(User user);
+    void forgotPassword(String email);
+
+    void resetPassword(String token, String password);
 }

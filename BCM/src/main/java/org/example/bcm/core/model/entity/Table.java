@@ -28,7 +28,6 @@ public class Table {
     @JoinColumn(name = "club_id")
     private Club club;
 
-    //todo check this relation
     @OneToMany(mappedBy = "table")
     private Set<Challenge> challenges;
 }

@@ -19,7 +19,7 @@ public class CityController {
 
     private final CityService cityService;
 
-    @PreAuthorize("hasAuthority('WRITE_CITY')")
+//    @PreAuthorize("hasAuthority('WRITE_CITY')")
     @GetMapping
     public ResponseEntity<List<CityResponseDto>> getAllCities() {
         return ResponseEntity.ok(cityService.getAllCities());

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.bcm.core.model.dto.request.RefreshTokenRequestDto;
 import org.example.bcm.core.model.dto.request.UserLoginRequestDto;
 import org.example.bcm.core.model.dto.request.UserRegisterRequestDto;
+import org.example.bcm.core.model.dto.response.ApiResponse;
 import org.example.bcm.core.model.dto.response.AuthenticationResponseDto;
 import org.example.bcm.core.model.dto.response.UserResponseDto;
 import org.example.bcm.core.model.entity.Permission;
@@ -89,6 +90,22 @@ public class AuthenticationController {
 
         return ResponseEntity.badRequest().body(
                 Map.of("message", "You are not logged in")
+        );
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<ApiResponse<?>> forgotPassword(@RequestParam String email) {
+        authenticationService.forgotPassword(email);
+        return ResponseEntity.ok(
+                ApiResponse.success("An email has been sent to reset your password", null)
+        );
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<ApiResponse<?>> resetPassword(@RequestParam String token, @RequestParam String password) {
+        authenticationService.resetPassword(token, password);
+        return ResponseEntity.ok(
+                ApiResponse.success("Password has been reset", null)
         );
     }
 }

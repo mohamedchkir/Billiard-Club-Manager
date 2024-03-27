@@ -12,6 +12,7 @@ import org.example.bcm.core.model.entity.Token;
 import org.example.bcm.core.model.entity.User;
 import org.example.bcm.core.repository.TokenRepository;
 import org.example.bcm.core.service.TokenService;
+import org.example.bcm.shared.Enum.TokenType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -108,6 +109,7 @@ public class TokenServiceImpl implements TokenService {
         token.setRevoked(false);
         token.setToken(Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes()));
         token.setExpiryDate(Instant.now().plusMillis(refreshTokenExpirationTime));
+        token.setType(TokenType.ACCESS);
         token.setUuid(UUID.randomUUID());
         token.setUser(user);
 

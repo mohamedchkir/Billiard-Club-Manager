@@ -2,6 +2,8 @@ package org.example.bcm.core.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.bcm.shared.Enum.TokenType;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -23,6 +25,9 @@ public class Token {
 
     @Column(unique = true)
     private String token;
+
+    @Enumerated(EnumType.STRING)
+    private TokenType type;
 
     @ManyToOne
     private User user;
